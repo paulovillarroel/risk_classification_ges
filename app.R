@@ -19,12 +19,14 @@ ui <- fluidPage(
         
         
         helpText("Esta aplicación te permite subir tus garantías GES y clasificarlas basadas en el modelo de riesgo de vencimiento."),
+        a("Puedes tener más de información del modelo en este artículo", href = "http://opensaludlab.blogspot.com/2016/12/aplicacion-de-metodologia-lean-en-la.html"),
         br(),
-        helpText("Sube los archivos descargados de SIGGES en formato Excel (.xlsx)."),
+        br(),
+        helpText("Sube los archivos descargados de SIGGES en formato Excel (.xlsx)"),
         br(),
        
         p("Elaborado por Paulo Villarroel"),
-        a("Revisa el repositorio de este proyecto en GitHub", href = "https://github.com/paulovillarroel/visor_casos"),
+        a("Revisa el repositorio de este proyecto en GitHub", href = "https://github.com/paulovillarroel/risk_classification_ges"),
         
         
         tags$hr(),
