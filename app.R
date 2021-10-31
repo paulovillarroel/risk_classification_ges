@@ -3,6 +3,7 @@ library(readxl)
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(plotly)
 
 
 
@@ -22,7 +23,11 @@ ui <- fluidPage(
         a("Puedes tener más de información del modelo en este artículo", href = "http://opensaludlab.blogspot.com/2016/12/aplicacion-de-metodologia-lean-en-la.html"),
         br(),
         br(),
-        helpText("Sube los archivos descargados de SIGGES en formato Excel (.xlsx)"),
+        helpText("Descarga las garantías vigentes y retrasadas desde la plataforma SIGGES. Guárdalas como un Excel (.xlsx). No
+                 le hagas cambios, no elimines columnas ni filas. Solo asegúrate que sean archivos de Excel.
+                 Luego súbelas en cada una de las secciones de arriba, según corresponda.
+                 Una vez cargados los archivos, se te mostrará una previsualización. Desde el botón DOWNLOAD puedes descargar
+                 al archivo completo con la clasificación de riesgo de cada garantía."),
         br(),
        
         p("Elaborado por Paulo Villarroel"),
@@ -37,7 +42,10 @@ ui <- fluidPage(
       
       mainPanel(
         
-        tableOutput('contents')
+        #tableOutput("contents"),
+        #plotOutput("plot", height = "650px")
+        plotlyOutput("plot", height = "700px")
+        
         
       )
     )
@@ -83,7 +91,8 @@ server <- function(input, output) {
                indice_resolucion < 0.7 & indice_resolucion >= 0.35 ~ "Vigente riesgo medio",
                indice_resolucion < 0.35 ~ "Vigente riesgo bajo"
                
-             )
+             ),
+             categoria = factor(categoria, levels = c("Vigente riesgo bajo", "Vigente riesgo medio", "Vigente riesgo alto", "Vencido"))
              
       )
     
@@ -100,13 +109,48 @@ server <- function(input, output) {
     
     else {
       
-      getData() |> 
-        select(1:4, 13, 14) |> 
-        head()
+       getData() |> 
+         select(1:4, 13, 14) |> 
+         head()
       
     }
     
   )
+  
+  
+  output$plot <- renderPlotly(
+    
+    if (is.null(input$file1) | is.null(input$file2)) {
+      
+      return(NULL)
+      
+    } 
+    
+    else {
+      
+      plot <- getData() |> 
+        group_by(problema_de_salud, categoria) |> 
+        summarise(n_casos = n()) |> 
+        ggplot(aes(categoria, problema_de_salud, fill = n_casos)) +
+        geom_tile() +
+        scale_fill_gradient(low = "#fee5d9", high = "#b30000") +
+        theme_bw() +
+        labs(
+          x = "",
+          y = ""
+        ) +
+        theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)
+              )
+      
+      return(plot)
+      
+    }
+    
+    
+    
+  )
+  
+  
   
   output$downloadData <- downloadHandler(
     
