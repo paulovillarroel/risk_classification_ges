@@ -6,7 +6,6 @@ library(lubridate)
 library(plotly)
 
 
-
 ui <- fluidPage(
   
   fluidPage(
@@ -145,8 +144,6 @@ server <- function(input, output) {
       return(plot)
       
     }
-    
-    
     
   )
   
