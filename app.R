@@ -18,15 +18,14 @@ ui <- fluidPage(
                   accept= ".xlsx"),
         
         
-        helpText("Esta aplicación te permite subir tus garantías GES y clasificarlas basadas en el modelo de riesgo de vencimiento."),
-        a("Puedes tener más de información del modelo en este artículo", href = "http://opensaludlab.blogspot.com/2016/12/aplicacion-de-metodologia-lean-en-la.html"),
+        helpText("Esta aplicación te permite subir tus garantías GES y clasificarlas basadas ", a("en el modelo de riesgo de vencimiento.", href = "http://opensaludlab.blogspot.com/2016/12/aplicacion-de-metodologia-lean-en-la.html")),
+        helpText("Nota: Esta es una versión DEMO y aún en desarrollo. Te suguiero que no la uses para fines profesionales."),
         br(),
-        br(),
-        helpText("Descarga las garantías vigentes y retrasadas desde la plataforma SIGGES. Guárdalas como un Excel (.xlsx). No
+        helpText("USO: Descarga las garantías vigentes y retrasadas desde la plataforma SIGGES. Guárdalas como un Excel (.xlsx). No
                  le hagas cambios, no elimines columnas ni filas. Solo asegúrate que sean archivos de Excel.
                  Luego súbelas en cada una de las secciones de arriba, según corresponda.
                  Una vez cargados los archivos, se te mostrará una previsualización. Desde el botón DOWNLOAD puedes descargar
-                 al archivo completo con la clasificación de riesgo de cada garantía."),
+                 al archivo generado."),
         br(),
        
         p("Elaborado por Paulo Villarroel"),
