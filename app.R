@@ -27,7 +27,6 @@ ui <- fluidPage(
                  Una vez cargados los archivos, se te mostrará una previsualización. Desde el botón DOWNLOAD puedes descargar
                  al archivo generado."),
         br(),
-       
         p("Elaborado por Paulo Villarroel"),
         a("Revisa el repositorio de este proyecto en GitHub", href = "https://github.com/paulovillarroel/risk_classification_ges"),
         
