@@ -82,14 +82,14 @@ server <- function(input, output) {
              plazo_interno = plazo_ges * 0.7,
              fecha_interna = fecha_de_inicio + plazo_interno,
              indice_resolucion = dias_avanzados / plazo_ges,
-             categoria = case_when(
+             riesgo = case_when(
                indice_resolucion > 1 ~ "Vencido",
-               indice_resolucion >= 0.7 ~ "Vigente riesgo alto",
-               indice_resolucion < 0.7 & indice_resolucion >= 0.35 ~ "Vigente riesgo medio",
-               indice_resolucion < 0.35 ~ "Vigente riesgo bajo"
+               indice_resolucion >= 0.7 ~ "Alto",
+               indice_resolucion < 0.7 & indice_resolucion >= 0.35 ~ "Medio",
+               indice_resolucion < 0.35 ~ "Bajo"
                
              ),
-             categoria = factor(categoria, levels = c("Vigente riesgo bajo", "Vigente riesgo medio", "Vigente riesgo alto", "Vencido"))
+             riesgo = factor(riesgo, levels = c("Bajo", "Medio", "Alto", "Vencido"))
              
       )
     
@@ -126,11 +126,11 @@ server <- function(input, output) {
     else {
       
       plot <- getData() |> 
-        group_by(problema_de_salud, categoria) |> 
+        group_by(problema_de_salud, riesgo) |> 
         summarise(n_casos = n()) |> 
-        ggplot(aes(categoria, problema_de_salud, fill = n_casos)) +
-        geom_tile() +
-        scale_fill_gradient(low = "#fee5d9", high = "#b30000") +
+        ggplot(aes(riesgo, problema_de_salud)) +
+        geom_tile(aes(fill = n_casos)) +
+        scale_fill_gradient(low = "#efedf5", high = "#756bb1") +
         theme_bw() +
         labs(
           x = "",
